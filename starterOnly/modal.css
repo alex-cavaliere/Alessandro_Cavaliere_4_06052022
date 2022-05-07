@@ -54,6 +54,7 @@ img {
 
 .topnav a:hover {
   background-color: #ff0000;
+  transition: background-color 600ms;
   color: #ffffff;
   border-radius: 15px;
 }
@@ -115,9 +116,8 @@ main {
 
 }
 
-.modal-btn {
+.modal-btn{
   font-size: 145%;
-  background: #fe142f;
   display: flex;
   margin: auto;
   padding: 2em;
@@ -129,6 +129,7 @@ main {
 
 .modal-btn:hover {
   background: #3876ac;
+  transition: all 250ms;
 }
 
 .footer {
@@ -147,10 +148,6 @@ main {
   border-radius: 15px;
   cursor: pointer;
   font-size: 16px;
-}
-
-.button:hover {
-  background: #3876ac;
 }
 
 .smFont {
