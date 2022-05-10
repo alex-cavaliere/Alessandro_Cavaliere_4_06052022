@@ -6,17 +6,7 @@ function editNav() {
     x.className = "topnav";
   }
 }
-// validation function
-function validate(){
-  modalbg.addEventListener("submit", (e) =>{
-    e.preventDefault();
-    // confirmation message
-    /*let para = document.createElement("p");
-    para.append("Merci d'avoir reservé.");
-    console.log(para.textContent);
-    modalBody.append(para.textContent);*/
-  });
-}
+
 // DOM Elements
 const modalBody = document.querySelector(".modal-body");
 const modalbg = document.querySelector(".bground");
