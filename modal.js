@@ -11,13 +11,16 @@ function validate(){
   modalBody.addEventListener('submit', function(e){
     e.preventDefault();
   })
-  if(formData[0] === "ciao"){
-    alert("ciao anche a te");
-  }else{
-    alert("bho")
-  }
+  // procedimento per puntare all'input dell'email
+  let email = formData[2].children[2];
+  email.addEventListener('keyup', function(){
+    console.log(email.value);
+  })
 }
-
+const x = {
+  hasError : false,
+  regex : /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+};
 // DOM Elements
 const modalBody = document.querySelector(".modal-body");
 //console.log(modalBody);
@@ -26,7 +29,8 @@ const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 //console.log(modalBtn);
 const formData = document.querySelectorAll(".formData");
-console.log(formData[0]);
+
+//console.log(formData);
 const close_modal = document.querySelectorAll(".close");
 //console.log(close_modal);
 
