@@ -8,15 +8,13 @@ function editNav() {
 }
 // DOM Elements
 const modalBody = document.querySelector(".modal-body");
-//console.log(modalBody);
 const modalbg = document.querySelector(".bground");
-//console.log(modalbg);
+const modalbg_2 = document.querySelector('#bground-2');
 const modalBtn = document.querySelectorAll(".modal-btn");
-//console.log(modalBtn);
 const formData = document.querySelectorAll(".formData");
-// oggetto con proprietà regex e booleano
+
+// object avec RegEx
 const x = {
-  hasError : false,
   emailregex : /^[A-z0-9\.\+_-]+@[A-z0-9\._-]+\.[A-z]{2,4}$/,
   textregex : /^[A-z/ ]{2,20}$/ 
 };
@@ -35,53 +33,57 @@ close_modal.forEach((close) => close.addEventListener("click", closeModal));
 function launchModal() {
   modalbg.style.display = "block";
 }
+function launchConfirm(){
+  modalbg_2.style.display = "block";
+  modalbg.style.display = "none";
+}
 
 // close modal form
 function closeModal(){
   modalbg.style.display = "none";
 }
 
-  // variabili
+  // variables
 let firstname = formData[0].children[2];
 let lastname = formData[1].children[2];
 let email = formData[2].children[2];
+let terms = formData[6].children[1].previousElementSibling;
   
 // verifica nome e cognome
 
 firstname.addEventListener('keyup', function(e){
   if(x.textregex.test(e.target.value)){
-    console.log("ok");
     firstname.style.backgroundColor = "green";
+    hasError = false;
   }else{
-    console.log("error");
     firstname.style.backgroundColor = "red";
+    hasError = true;
   }
 })
 
 lastname.addEventListener('keyup', function(e){
   if(x.textregex.test(e.target.value)){
-    console.log("ok");
     lastname.style.backgroundColor = "green";
+    hasError = false;
   }else{
-    console.log("error");
     lastname.style.backgroundColor = "red";
+    hasError = true;
   }
 })
-// funzione di controllo email
-  // verifica caratteri email con regEx
+// function de controle email
+  // verification des characters avec un email regEx 
 email.addEventListener('keyup', function(e){
   if(x.emailregex.test(e.target.value)){
-    console.log("ok");
     email.style.backgroundColor = "green";
+    hasError = false;
   }else{
-    console.log("error");
     email.style.backgroundColor = "red";
+    hasError = true;
   }
 })
-
   // function de validation phase de debug
 function validate(){
-  modalBody.addEventListener('submit', function(e){
+  modalbg.addEventListener('submit', function(e){
     e.preventDefault();
   })
   if(!x.textregex.test(firstname.value)){
@@ -98,6 +100,13 @@ function validate(){
     document.querySelector('.email_message').innerHTML = "saisissez une email valide";
   }else{
     document.querySelector('.email_message').innerHTML = "";
+  }
+  if(terms.checked === false){
+    document.querySelector('.terms_message').innerHTML = "accepter les termes et conditions";
+    hasError = true;
+  }else{
+    document.querySelector('.terms_message').innerHTML = "";
+    hasError = false;
   }
 }
 
