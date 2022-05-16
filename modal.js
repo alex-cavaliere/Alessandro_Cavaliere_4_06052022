@@ -12,16 +12,17 @@ const modalbg = document.querySelector(".bground");
 const modalbg_2 = document.querySelector('#bground-2');
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
+const confirmMessage = document.querySelector(".message-confirm");
+//console.log(formData);
+const close_modal = document.querySelectorAll(".close");
+//console.log(close_modal);
+
 
 // object avec RegEx
 const x = {
   emailregex : /^[A-z0-9\.\+_-]+@[A-z0-9\._-]+\.[A-z]{2,4}$/,
-  textregex : /^[A-z/ ]{2,20}$/ 
+  textregex : /^[A-z ]{2,20}$/ 
 };
-
-//console.log(formData);
-const close_modal = document.querySelectorAll(".close");
-//console.log(close_modal);
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
@@ -35,18 +36,21 @@ function launchModal() {
 }
 function launchConfirm(){
   modalbg_2.style.display = "block";
+  confirmMessage.innerHTML = "Merci d'avoir reservé.";
   modalbg.style.display = "none";
 }
 
 // close modal form
 function closeModal(){
   modalbg.style.display = "none";
+  modalbg_2.style.display = "none";
 }
 
   // variables
 let firstname = formData[0].children[2];
 let lastname = formData[1].children[2];
 let email = formData[2].children[2];
+let date = formData[3].children[2];
 let terms = formData[6].children[1].previousElementSibling;
   
 // verifica nome e cognome
@@ -107,6 +111,7 @@ function validate(){
   }else{
     document.querySelector('.terms_message').innerHTML = "";
     hasError = false;
+    launchConfirm();
   }
 }
 
