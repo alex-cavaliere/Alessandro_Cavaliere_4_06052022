@@ -58,7 +58,7 @@
               method="get"
               onsubmit="return validate();">
               <div
-                class="formData">
+                class="formData" data-error data-error-visible="false">
                 <label for="first">Prénom</label><br>
                 <input
                   class="text-control"
@@ -67,11 +67,12 @@
                   name="first"
                   minlength="2"
                   required
-                /><br>
-                <p class="first_message"></p>
+                  data-error>
+                </input>
+                <span class="first_message error"></span>
               </div>
               <div
-                class="formData">
+                class="formData" data-error data-error-visible="false">
                 <label for="last">Nom</label><br>
                 <input
                   class="text-control"
@@ -80,11 +81,12 @@
                   name="last"
                   minlength="2"
                   required
+                  data-error
                 /><br>
-                <p class="last_message"></p>
+                <span class="last_message error"></span>
               </div>
               <div
-                class="formData">
+                class="formData" data-error data-error-visible="false">
                 <label for="email">E-mail</label><br>
                 <input
                   class="text-control"
@@ -92,11 +94,12 @@
                   id="email"
                   name="email"
                   required
+                  data-error
                 /><br>
-                <p class="email_message"></p>
+                <span class="email_message error"></span>
               </div>
               <div
-                class="formData">
+                class="formData" data-error data-error-visible="false">
                 <label for="birthdate">Date de naissance</label><br>
                 <input
                   class="text-control"
@@ -104,18 +107,19 @@
                   id="birthdate"
                   name="birthdate"
                   required
+                  data-error
                 /><br>
-                <p class="date_message"></p>
+                <span class="date_message error"></span>
               </div>
               <div
-                class="formData">
+                class="formData" data-error data-error-visible="false">
                 <label for="quantity">À combien de tournois GameOn avez-vous déjà participé ?</label><br>
-                <input type="number" class="text-control" id="quantity" name="quantity" min="0" max="99">
-                <p class="quantity_message"></p>
+                <input type="number" class="text-control" id="quantity" name="quantity" min="0" max="99" data-error>
+                <span class="quantity_message"></span>
               </div>
               <p class="text-label">A quel tournoi souhaitez-vous participer cette année ?</p>
               <div
-                class="formData">
+                class="formData" data-error data-error-visible="false">
                 <input
                   class="checkbox-input"
                   type="radio"
@@ -184,7 +188,7 @@
                 <p class="location_message"></p>
               </div>
               <div
-                class="formData">
+                class="formData" data-error data-error-visible="false">
                 <input
                   class="checkbox-input"
                   type="checkbox"
@@ -202,7 +206,7 @@
                 </label>
                 <br>
               </div>
-              <p class="terms_message"></p>
+              <p class="terms_message error"></p>
               <input
                 class="btn-submit button"
                 type="submit"

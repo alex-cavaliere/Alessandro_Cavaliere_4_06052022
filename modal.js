@@ -50,39 +50,42 @@ function closeModal(){
 let firstname = formData[0].children[2];
 let lastname = formData[1].children[2];
 let email = formData[2].children[2];
-let date = formData[3].children[2];
 let terms = formData[6].children[1].previousElementSibling;
-  
+let date = document.querySelector('#birthday');
+// selezione di tutti i text-control
+let prova = document.querySelectorAll('.text-control');
+console.log(prova);
 // verifica nome e cognome
 
 firstname.addEventListener('keyup', function(e){
   if(x.textregex.test(e.target.value)){
-    firstname.style.backgroundColor = "green";
-    hasError = false;
+    //firstname.style.backgroundColor = "green";
+    formData[0].dataset.errorVisible = false;
   }else{
-    firstname.style.backgroundColor = "red";
-    hasError = true;
+    //firstname.style.backgroundColor = "red";
+    console.log(formData[0].dataset);
+    formData[0].dataset.errorVisible = true;
   }
 })
 
 lastname.addEventListener('keyup', function(e){
   if(x.textregex.test(e.target.value)){
-    lastname.style.backgroundColor = "green";
-    hasError = false;
+    //lastname.style.backgroundColor = "green";
+    formData[1].dataset.errorVisible = false;
   }else{
-    lastname.style.backgroundColor = "red";
-    hasError = true;
+    //lastname.style.backgroundColor = "red";
+    formData[1].dataset.errorVisible = true;
   }
 })
 // function de controle email
   // verification des characters avec un email regEx 
 email.addEventListener('keyup', function(e){
   if(x.emailregex.test(e.target.value)){
-    email.style.backgroundColor = "green";
-    hasError = false;
+    //email.style.backgroundColor = "green";
+    formData[2].dataset.errorVisible = false;
   }else{
-    email.style.backgroundColor = "red";
-    hasError = true;
+    //email.style.backgroundColor = "red";
+    formData[2].dataset.errorVisible = true;
   }
 })
   // function de validation phase de debug
@@ -105,13 +108,15 @@ function validate(){
   }else{
     document.querySelector('.email_message').innerHTML = "";
   }
-  if(terms.checked === false){
-    document.querySelector('.terms_message').innerHTML = "accepter les termes et conditions";
-    hasError = true;
+  if(terms.checked === false || !x.textregex.test(firstname.value) || !x.textregex.test(lastname.value) || !x.emailregex.test(email.value)){
+    document.querySelector('.terms_message').innerHTML = "verifier les champs de saisie";
   }else{
     document.querySelector('.terms_message').innerHTML = "";
-    hasError = false;
     launchConfirm();
+  }
+  if(terms.checked === false){
+    document.querySelector('.terms_message').innerHTML = "accepter les termes et conditions";
+    formData[6].dataset.errorVisible = true;
   }
 }
 
