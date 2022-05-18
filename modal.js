@@ -11,6 +11,7 @@ const modalBody = document.querySelector(".modal-body");
 const modalbg = document.querySelector(".bground");
 const modalbg_2 = document.querySelector('#bground-2');
 const modalBtn = document.querySelectorAll(".modal-btn");
+const formBtn = document.querySelectorAll('btn-submit');
 const formData = document.querySelectorAll(".formData");
 const confirmMessage = document.querySelector(".message-confirm");
 const close_modal = document.querySelectorAll(".close");
@@ -86,7 +87,7 @@ email.addEventListener('keyup', function(e){
     formData[2].dataset.errorVisible = true;
   }
 })*/
-  // function de validation phase de debug
+// function de validation du form.
 function validate(){
   modalbg.addEventListener('submit', function(e){
     e.preventDefault();
@@ -94,13 +95,13 @@ function validate(){
     let lastname = check('#last', 1, 'text', '.last_message', 'saisissez un nom valide');
     let email = check('#email', 2, 'email', '.email_message', 'saisissez un e-mail valide');
     let location = check('location', 5, 'radio', '.location_message', 'saisissez une Ville');
-    console.log(location);
-    //let location = check(5, 'radio', '.location_message', 'saisissez une ville');
+    let termes = check('checkbox1', 6, 'checkbox', '.terms_message', 'accepter les termes et conditions');
   })
 }
 
+// function de controle du form.
 function check(elementName, i, type, messageClass, message){
-  let element = document.querySelector(elementName);
+  const element = document.querySelector(elementName);
   if (type === "text"){
     if(x.textregex.test(element.value)){
       formData[i].dataset.errorVisible = false;
@@ -119,35 +120,36 @@ function check(elementName, i, type, messageClass, message){
       return document.querySelector(messageClass).innerHTML = message;
     } 
   }
-  // sistemare questa condizione 
-  if(type === "radio"){
-    let elements = document.getElementsByName('location');
-    let selected;
-      for (let element of elements){
-        if(element.checked){
-          selected = element.value;
-        }
-        if(selected != "undefined"){
-          document.querySelector(messageClass).innerHTML = "";
-          return selected;
-        }else{
-          return document.querySelector(messageClass).innerHTML = message;
-        }
-      }
-    }
-  /*if (type === "radio"){
-    let element2 = document.getElementsByName(elementName);
-    for (let z = 0; z < element2.length; z++) {
-      let select = element2[z];
-      if (select){
-        return document.querySelector(messageClass).innerHTML = "";
+  if (type === "radio"){
+    const radios = document.getElementsByName(elementName);
+    let checked;
+    for (const radio of radios){
+      //console.log(radio);
+      if (radio.checked){
+        checked = radio.checked;
+        //console.log(checked);
         break;
-      }else{
-        formData[i].dataset.errorVisible = true;
-        return document.querySelector(messageClass).innerHTML = message;
       }
     }
-  }*/
+    if(checked){
+      formData[i].dataset.errorVisible = false;
+      document.querySelector(messageClass).innerHTML = "";
+    }else{
+      formData[i].dataset.errorVisible = true;
+      document.querySelector(messageClass).innerHTML = message;
+    }
+  }
+  if (type === "checkbox"){
+    const terms = document.getElementById(elementName).checked;
+    console.log(terms);
+    if(!terms){
+      formData[i].dataset.errorVisible = true;
+      document.querySelector(messageClass).innerHTML = message;
+    }else{
+      formData[i].dataset.errorVisible = false;
+      document.querySelector(messageClass).innerHTML = "";
+    }
+  }
 }
 
 /*if(!x.textregex.test(lastname.value)){
