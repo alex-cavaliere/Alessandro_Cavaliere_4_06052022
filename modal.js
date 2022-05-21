@@ -24,6 +24,8 @@ const x = {
   textregex : /^[A-z ]{2,20}$/ 
 };
 
+let hasError;
+
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 
@@ -91,9 +93,9 @@ email.addEventListener('keyup', function(e){
 function validate(){
   modalbg.addEventListener('submit', function(e){
     e.preventDefault();
-    let firstname = check('#first', 0, 'text', '.first_message', 'saisissez un prenom valide');
-    let lastname = check('#last', 1, 'text', '.last_message', 'saisissez un nom valide');
-    let email = check('#email', 2, 'email', '.email_message', 'saisissez un e-mail valide');
+    let firstname = check('first', 0, 'text', '.first_message', 'saisissez un prenom valide');
+    let lastname = check('last', 1, 'text', '.last_message', 'saisissez un nom valide');
+    let email = check('email', 2, 'email', '.email_message', 'saisissez un e-mail valide');
     let location = check('location', 5, 'radio', '.location_message', 'saisissez une Ville');
     let termes = check('checkbox1', 6, 'checkbox', '.terms_message', 'accepter les termes et conditions');
   })
@@ -101,57 +103,54 @@ function validate(){
 
 // function de controle du form.
 function check(elementName, i, type, messageClass, message){
-  const element = document.querySelector(elementName);
-  if (type === "text"){
-    if(x.textregex.test(element.value)){
-      formData[i].dataset.errorVisible = false;
-      return document.querySelector(messageClass).innerHTML = "";
-    }else{
-      formData[i].dataset.errorVisible = true;
-      return document.querySelector(messageClass).innerHTML = message;
-    } 
-  }
-  if (type === "email"){
-    if(x.emailregex.test(element.value)){
-      formData[i].dataset.errorVisible = false;
-      return document.querySelector(messageClass).innerHTML = "";
-    }else{
-      formData[i].dataset.errorVisible = true;
-      return document.querySelector(messageClass).innerHTML = message;
-    } 
-  }
-  if (type === "radio"){
-    const radios = document.getElementsByName(elementName);
-    let checked;
-    for (const radio of radios){
-      //console.log(radio);
-      if (radio.checked){
-        checked = radio.checked;
-        //console.log(checked);
-        break;
+  //const text = document.querySelector(elementName);
+  const elements = document.getElementsByName(elementName);
+  const terms = document.getElementById(elementName);
+  for(const element of elements){
+    if (type === "text" ){
+      if(x.textregex.test(element.value)){
+        formData[i].dataset.errorVisible = false;
+        document.querySelector(messageClass).innerHTML = "";
+        return hasError = false;
+      }
+    }else if (type === "email"){
+      if(x.emailregex.test(element.value)){
+        formData[i].dataset.errorVisible = false;
+        document.querySelector(messageClass).innerHTML = "";
+        return hasError = false;
+      } 
+    }else if (type === "radio"){
+      let checked;
+      for (const element of elements){
+        //console.log(elements);
+        if (element.checked){
+          checked = element.checked;
+          //console.log(checked);
+          break;
+        }
+      }
+      if(checked){
+        formData[i].dataset.errorVisible = false;
+        document.querySelector(messageClass).innerHTML = "";
+        return hasError = false;
       }
     }
-    if(checked){
-      formData[i].dataset.errorVisible = false;
-      document.querySelector(messageClass).innerHTML = "";
-    }else{
-      formData[i].dataset.errorVisible = true;
-      document.querySelector(messageClass).innerHTML = message;
-    }
+    formData[i].dataset.errorVisible = true;
+    document.querySelector(messageClass).innerHTML = message;
+    return hasError = true;
   }
   if (type === "checkbox"){
-    const terms = document.getElementById(elementName).checked;
-    console.log(terms);
-    if(!terms){
-      formData[i].dataset.errorVisible = true;
-      document.querySelector(messageClass).innerHTML = message;
-    }else{
+    if(terms.checked){
       formData[i].dataset.errorVisible = false;
       document.querySelector(messageClass).innerHTML = "";
+      return hasError = false;
+    }else{
+      formData[i].dataset.errorVisible = true;
+      document.querySelector(messageClass).innerHTML = message;
+      return hasError = true;       
     }
   }
 }
-
 /*if(!x.textregex.test(lastname.value)){
   document.querySelector('.last_message').innerHTML = "saisissez un nom";
 }else{
