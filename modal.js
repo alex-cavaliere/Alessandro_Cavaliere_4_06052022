@@ -12,6 +12,8 @@ const modalbg = document.querySelector(".bground");
 const modalbg_2 = document.querySelector('#bground-2');
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formBtn = document.querySelectorAll('btn-submit');
+// form HtML collection in array
+const form = document.getElementsByName('reserve');
 const formData = document.querySelectorAll(".formData");
 const confirmMessage = document.querySelector(".message-confirm");
 const close_modal = document.querySelectorAll(".close");
@@ -24,7 +26,6 @@ const x = {
   textregex : /^[A-z ]{2,20}$/ 
 };
 
-let hasError;
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
@@ -50,11 +51,11 @@ function closeModal(){
 
   // variables
   // inserire le variabili all'interno della funzione validate(). poi definire una funzione itinerante di check con i regex di testo e email.
-/*let firstname = formData[0].children[2];
+let firstname = formData[0].children[2];
 let lastname = formData[1].children[2];
 let email = formData[2].children[2];
-let terms = formData[6].children[1].previousElementSibling;
-let date = document.querySelector('#birthday');*/
+let date = document.querySelector('#birthday');
+
 
 
 // verifica nome e cognome
@@ -108,49 +109,83 @@ function check(elementName, i, type, messageClass, message){
   const terms = document.getElementById(elementName);
   for(const element of elements){
     if (type === "text" ){
-      if(x.textregex.test(element.value)){
-        formData[i].dataset.errorVisible = false;
-        document.querySelector(messageClass).innerHTML = "";
-        return hasError = false;
+      if(!x.textregex.test(element.value)){
+        formData[i].dataset.errorVisible = true;
+        document.querySelector(messageClass).innerHTML = message;
+        return false;
       }
     }else if (type === "email"){
-      if(x.emailregex.test(element.value)){
-        formData[i].dataset.errorVisible = false;
-        document.querySelector(messageClass).innerHTML = "";
-        return hasError = false;
+      if(!x.emailregex.test(element.value)){
+        formData[i].dataset.errorVisible = true;
+        document.querySelector(messageClass).innerHTML = message;
+        return false;
       } 
     }else if (type === "radio"){
       let checked;
-      for (const element of elements){
+      for (const radio of elements){
         //console.log(elements);
-        if (element.checked){
-          checked = element.checked;
+        if (radio.checked){
+          checked = radio.checked;
           //console.log(checked);
           break;
         }
       }
-      if(checked){
-        formData[i].dataset.errorVisible = false;
-        document.querySelector(messageClass).innerHTML = "";
-        return hasError = false;
+      if(!checked){
+        formData[i].dataset.errorVisible = true;
+        document.querySelector(messageClass).innerHTML = message;
+        return false;
       }
     }
-    formData[i].dataset.errorVisible = true;
-    document.querySelector(messageClass).innerHTML = message;
-    return hasError = true;
+    formData[i].dataset.errorVisible = false;
+    document.querySelector(messageClass).innerHTML = "";
+    return true;
+    // sistemare questo forEach.. fors siamon sulla strada giusta. fare un forEach a tutti gli elementi e creare delle condizioni di errore.
+  }
+  if(terms.checked === false || !x.textregex.test(firstname.value) || !x.textregex.test(lastname.value) || !x.emailregex.test(email.value)){
+    document.querySelector('.terms_message').innerHTML = "verifier les champs de saisie";
+  }else{
+    document.querySelector('.terms_message').innerHTML = "";
+    launchConfirm();
   }
   if (type === "checkbox"){
     if(terms.checked){
       formData[i].dataset.errorVisible = false;
       document.querySelector(messageClass).innerHTML = "";
-      return hasError = false;
+      return true;
     }else{
       formData[i].dataset.errorVisible = true;
       document.querySelector(messageClass).innerHTML = message;
-      return hasError = true;       
+      return false;       
     }
   }
 }
+/*function checkValidation(){
+  try {
+    requiredFields();
+    requiredTerms();
+    formData[i].dataset.errorVisible = false;
+    document.getElementsByClassName('terms_message').innerHTML = "";
+  } catch (error) {
+    formData[i].dataset.errorVisible = true;
+    document.getElementsByClassName('terms_message').innerHTML = message;
+  }
+}*/
+/*function requiredFields(){
+  text.forEach(element => {
+    let error = false;
+    console.log(element);
+    if(!x.textregex.test(element.value)){
+      error = true;
+    }
+    if(!x.emailregex.test(element.value)){
+      error = true;
+    }
+    console.log(error);
+    if(!error){
+      return launchConfirm();
+    }
+  });
+}*/
 /*if(!x.textregex.test(lastname.value)){
   document.querySelector('.last_message').innerHTML = "saisissez un nom";
 }else{
