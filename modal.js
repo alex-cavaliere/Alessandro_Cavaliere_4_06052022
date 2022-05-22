@@ -14,6 +14,7 @@ const modalBtn = document.querySelectorAll(".modal-btn");
 const formBtn = document.querySelectorAll('btn-submit');
 // form HtML collection in array
 const form = document.getElementsByName('reserve');
+const terms = document.getElementById('checkbox1');
 const formData = document.querySelectorAll(".formData");
 const confirmMessage = document.querySelector(".message-confirm");
 const close_modal = document.querySelectorAll(".close");
@@ -106,7 +107,6 @@ function validate(){
 function check(elementName, i, type, messageClass, message){
   //const text = document.querySelector(elementName);
   const elements = document.getElementsByName(elementName);
-  const terms = document.getElementById(elementName);
   for(const element of elements){
     if (type === "text" ){
       if(!x.textregex.test(element.value)){
@@ -126,7 +126,7 @@ function check(elementName, i, type, messageClass, message){
         //console.log(elements);
         if (radio.checked){
           checked = radio.checked;
-          //console.log(checked);
+          console.log(checked);
           break;
         }
       }
@@ -134,18 +134,16 @@ function check(elementName, i, type, messageClass, message){
         formData[i].dataset.errorVisible = true;
         document.querySelector(messageClass).innerHTML = message;
         return false;
+      }else if(terms.checked && checked && x.textregex.test(firstname.value) && x.textregex.test(lastname.value) && x.emailregex.test(email.value)){
+        formData[i].dataset.errorVisible = false;
+        document.querySelector(messageClass).innerHTML = "";
+        launchConfirm();
+        return true;
       }
     }
     formData[i].dataset.errorVisible = false;
     document.querySelector(messageClass).innerHTML = "";
     return true;
-    // sistemare questo forEach.. fors siamon sulla strada giusta. fare un forEach a tutti gli elementi e creare delle condizioni di errore.
-  }
-  if(terms.checked === false || !x.textregex.test(firstname.value) || !x.textregex.test(lastname.value) || !x.emailregex.test(email.value)){
-    document.querySelector('.terms_message').innerHTML = "verifier les champs de saisie";
-  }else{
-    document.querySelector('.terms_message').innerHTML = "";
-    launchConfirm();
   }
   if (type === "checkbox"){
     if(terms.checked){
