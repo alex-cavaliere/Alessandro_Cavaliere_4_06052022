@@ -1,5 +1,5 @@
 function editNav() {
-  var x = document.getElementById("myTopnav");
+  let x = document.getElementById("myTopnav");
   if (x.className === "topnav") {
     x.className += " responsive";
   } else {
@@ -12,19 +12,18 @@ const modalbg = document.querySelector(".bground");
 const modalbg_2 = document.querySelector('#bground-2');
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formBtn = document.querySelectorAll('btn-submit');
-// form HtML collection in array
-const form = document.getElementsByName('reserve');
-const terms = document.getElementById('checkbox1');
 const formData = document.querySelectorAll(".formData");
+//console.log(formData);
 const confirmMessage = document.querySelector(".message-confirm");
 const close_modal = document.querySelectorAll(".close");
-//console.log(close_modal);
+const terms = document.getElementById('checkbox1');
 
 
 // object avec RegEx
 const x = {
   emailregex : /^[A-z0-9\.\+_-]+@[A-z0-9\._-]+\.[A-z]{2,4}$/,
-  textregex : /^[A-z ]{2,20}$/ 
+  textregex : /^[A-z ]{2,20}$/, 
+  date: '2004-12-31'
 };
 
 
@@ -38,25 +37,24 @@ close_modal.forEach((close) => close.addEventListener("click", closeModal));
 function launchModal() {
   modalbg.style.display = "block";
 }
-function launchConfirm(){
-  modalbg_2.style.display = "block";
-  confirmMessage.innerHTML = "Merci d'avoir reservé.";
-  modalbg.style.display = "none";
-}
 
 // close modal form
 function closeModal(){
   modalbg.style.display = "none";
   modalbg_2.style.display = "none";
 }
+function launchConfirm(){
+  modalbg_2.style.display = "block";
+  confirmMessage.innerHTML = "Merci d'avoir reservé.";
+  modalbg.style.display = "none";
+}
 
   // variables
   // inserire le variabili all'interno della funzione validate(). poi definire una funzione itinerante di check con i regex di testo e email.
-let firstname = formData[0].children[2];
-let lastname = formData[1].children[2];
-let email = formData[2].children[2];
-let date = document.querySelector('#birthday');
-
+let firstname = document.getElementById('first');
+let lastname = document.getElementById('last');
+let email = document.getElementById('email');
+let date = document.getElementById('birthdate');
 
 
 // verifica nome e cognome
@@ -95,9 +93,11 @@ email.addEventListener('keyup', function(e){
 function validate(){
   modalbg.addEventListener('submit', function(e){
     e.preventDefault();
+    // je definis une variable pour chaque champs en passant la function 'check()' comme valeur avec des differentes parametres
     let firstname = check('first', 0, 'text', '.first_message', 'saisissez un prenom valide');
     let lastname = check('last', 1, 'text', '.last_message', 'saisissez un nom valide');
     let email = check('email', 2, 'email', '.email_message', 'saisissez un e-mail valide');
+    let date = check('birthdate', 3, 'date', '.date_message', 'vous deviez etre née avant le 31/12/2004 pour parteciper');
     let location = check('location', 5, 'radio', '.location_message', 'saisissez une Ville');
     let termes = check('checkbox1', 6, 'checkbox', '.terms_message', 'accepter les termes et conditions');
   })
@@ -105,9 +105,9 @@ function validate(){
 
 // function de controle du form.
 function check(elementName, i, type, messageClass, message){
-  //const text = document.querySelector(elementName);
   const elements = document.getElementsByName(elementName);
   for(const element of elements){
+    console.log(element);
     if (type === "text" ){
       if(!x.textregex.test(element.value)){
         formData[i].dataset.errorVisible = true;
@@ -119,14 +119,20 @@ function check(elementName, i, type, messageClass, message){
         formData[i].dataset.errorVisible = true;
         document.querySelector(messageClass).innerHTML = message;
         return false;
-      } 
+      }  
+    }else if (type === "date"){
+      element.min = '1940-12-31';
+      if(element.value > x.date){
+        formData[i].dataset.errorVisible = true;
+        document.querySelector(messageClass).innerHTML = message;
+        return false;
+      }
     }else if (type === "radio"){
       let checked;
       for (const radio of elements){
         //console.log(elements);
         if (radio.checked){
           checked = radio.checked;
-          console.log(checked);
           break;
         }
       }
@@ -134,7 +140,7 @@ function check(elementName, i, type, messageClass, message){
         formData[i].dataset.errorVisible = true;
         document.querySelector(messageClass).innerHTML = message;
         return false;
-      }else if(terms.checked && checked && x.textregex.test(firstname.value) && x.textregex.test(lastname.value) && x.emailregex.test(email.value)){
+      }else if(terms.checked && checked && x.textregex.test(firstname.value) && x.textregex.test(lastname.value) && x.emailregex.test(email.value) && date.value < x.date){
         formData[i].dataset.errorVisible = false;
         document.querySelector(messageClass).innerHTML = "";
         launchConfirm();
