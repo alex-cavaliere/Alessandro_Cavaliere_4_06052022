@@ -23,7 +23,7 @@ const terms = document.getElementById('checkbox1');
 const x = {
   emailregex : /^[A-z0-9\.\+_-]+@[A-z0-9\._-]+\.[A-z]{2,4}$/,
   textregex : /^[A-z ]{2,20}$/, 
-  date: '2004-12-31'
+  legaldate: '2004-12-31'
 };
 
 
@@ -45,50 +45,16 @@ function closeModal(){
 }
 function launchConfirm(){
   modalbg_2.style.display = "block";
-  confirmMessage.innerHTML = "Merci d'avoir reservé.";
+  confirmMessage.innerHTML = "Merci pour votre inscription";
   modalbg.style.display = "none";
 }
 
   // variables
-  // inserire le variabili all'interno della funzione validate(). poi definire una funzione itinerante di check con i regex di testo e email.
 let firstname = document.getElementById('first');
 let lastname = document.getElementById('last');
 let email = document.getElementById('email');
 let date = document.getElementById('birthdate');
 
-
-// verifica nome e cognome
-
-/*firstname.addEventListener('keyup', function(e){
-  if(x.textregex.test(e.target.value)){
-    //firstname.style.backgroundColor = "green";
-    formData[0].dataset.errorVisible = false;
-  }else{
-    //firstname.style.backgroundColor = "red"
-    formData[0].dataset.errorVisible = true;
-  }
-})
-
-lastname.addEventListener('keyup', function(e){
-  if(x.textregex.test(e.target.value)){
-    //lastname.style.backgroundColor = "green";
-    formData[1].dataset.errorVisible = false;
-  }else{
-    //lastname.style.backgroundColor = "red";
-    formData[1].dataset.errorVisible = true;
-  }
-})
-// function de controle email
-  // verification des characters avec un email regEx 
-email.addEventListener('keyup', function(e){
-  if(x.emailregex.test(e.target.value)){
-    //email.style.backgroundColor = "green";
-    formData[2].dataset.errorVisible = false;
-  }else{
-    //email.style.backgroundColor = "red";
-    formData[2].dataset.errorVisible = true;
-  }
-})*/
 // function de validation du form.
 function validate(){
   modalbg.addEventListener('submit', function(e){
@@ -122,7 +88,7 @@ function check(elementName, i, type, messageClass, message){
       }  
     }else if (type === "date"){
       element.min = '1940-12-31';
-      if(element.value > x.date){
+      if(element.value > x.legaldate){
         formData[i].dataset.errorVisible = true;
         document.querySelector(messageClass).innerHTML = message;
         return false;
@@ -140,7 +106,7 @@ function check(elementName, i, type, messageClass, message){
         formData[i].dataset.errorVisible = true;
         document.querySelector(messageClass).innerHTML = message;
         return false;
-      }else if(terms.checked && checked && x.textregex.test(firstname.value) && x.textregex.test(lastname.value) && x.emailregex.test(email.value) && date.value < x.date){
+      }else if(terms.checked && checked && x.textregex.test(firstname.value) && x.textregex.test(lastname.value) && x.emailregex.test(email.value) && date.value < x.legaldate){
         formData[i].dataset.errorVisible = false;
         document.querySelector(messageClass).innerHTML = "";
         launchConfirm();
@@ -163,53 +129,7 @@ function check(elementName, i, type, messageClass, message){
     }
   }
 }
-/*function checkValidation(){
-  try {
-    requiredFields();
-    requiredTerms();
-    formData[i].dataset.errorVisible = false;
-    document.getElementsByClassName('terms_message').innerHTML = "";
-  } catch (error) {
-    formData[i].dataset.errorVisible = true;
-    document.getElementsByClassName('terms_message').innerHTML = message;
-  }
-}*/
-/*function requiredFields(){
-  text.forEach(element => {
-    let error = false;
-    console.log(element);
-    if(!x.textregex.test(element.value)){
-      error = true;
-    }
-    if(!x.emailregex.test(element.value)){
-      error = true;
-    }
-    console.log(error);
-    if(!error){
-      return launchConfirm();
-    }
-  });
-}*/
-/*if(!x.textregex.test(lastname.value)){
-  document.querySelector('.last_message').innerHTML = "saisissez un nom";
-}else{
-  document.querySelector('.last_message').innerHTML = "";
-}
-if(!x.emailregex.test(email.value)){
-  document.querySelector('.email_message').innerHTML = "saisissez une email valide";
-}else{
-  document.querySelector('.email_message').innerHTML = "";
-}
-if(terms.checked === false || !x.textregex.test(firstname.value) || !x.textregex.test(lastname.value) || !x.emailregex.test(email.value)){
-  document.querySelector('.terms_message').innerHTML = "verifier les champs de saisie";
-}else{
-  document.querySelector('.terms_message').innerHTML = "";
-  launchConfirm();
-}
-if(terms.checked === false){
-  document.querySelector('.terms_message').innerHTML = "accepter les termes et conditions";
-  formData[6].dataset.errorVisible = true;
-}*/
+
 
 
 
