@@ -63,7 +63,7 @@ function validate(){
     let firstname = check('first', 0, 'text', '.first_message', 'saisissez un prenom valide');
     let lastname = check('last', 1, 'text', '.last_message', 'saisissez un nom valide');
     let email = check('email', 2, 'email', '.email_message', 'saisissez un e-mail valide');
-    let date = check('birthdate', 3, 'date', '.date_message', 'vous deviez etre née avant le 31/12/2004 pour parteciper');
+    let date = check('birthdate', 3, 'date', '.date_message', 'vous deviez avoir 18 ans pour parteciper');
     let location = check('location', 5, 'radio', '.location_message', 'saisissez une Ville');
     let termes = check('checkbox1', 6, 'checkbox', '.terms_message', 'accepter les termes et conditions');
   })
@@ -129,9 +129,6 @@ function check(elementName, i, type, messageClass, message){
     }
   }
 }
-
-
-
 
 
 
