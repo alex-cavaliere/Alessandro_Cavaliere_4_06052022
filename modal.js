@@ -13,13 +13,12 @@ const modalbg_2 = document.querySelector('#bground-2');
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formBtn = document.querySelectorAll('btn-submit');
 const formData = document.querySelectorAll(".formData");
-//console.log(formData);
 const confirmMessage = document.querySelector(".message-confirm");
 const close_modal = document.querySelectorAll(".close");
 const terms = document.getElementById('checkbox1');
 
 
-// object avec RegEx
+// object avec RegEx pour texte e-mail
 const x = {
   emailregex : /^[A-z0-9\.\+_-]+@[A-z0-9\._-]+\.[A-z]{2,4}$/,
   textregex : /^[A-z ]{2,20}$/, 
@@ -43,6 +42,8 @@ function closeModal(){
   modalbg.style.display = "none";
   modalbg_2.style.display = "none";
 }
+
+// confirmation du form
 function launchConfirm(){
   modalbg_2.style.display = "block";
   confirmMessage.innerHTML = "Merci pour votre inscription";
@@ -73,7 +74,6 @@ function validate(){
 function check(elementName, i, type, messageClass, message){
   const elements = document.getElementsByName(elementName);
   for(const element of elements){
-    console.log(element);
     if (type === "text" ){
       if(!x.textregex.test(element.value)){
         formData[i].dataset.errorVisible = true;
@@ -96,7 +96,6 @@ function check(elementName, i, type, messageClass, message){
     }else if (type === "radio"){
       let checked;
       for (const radio of elements){
-        //console.log(elements);
         if (radio.checked){
           checked = radio.checked;
           break;

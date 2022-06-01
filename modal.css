@@ -89,7 +89,7 @@ img {
     float: none;
     display: block;
     text-align: left;
-    animation-name: modalopen;
+    animation-name: topnav-open;
     animation-duration: var(--modal-duration);
   }
 }
@@ -241,7 +241,7 @@ input[data-error]::after {
     color: red;
 } 
 .error{
-  font-size: 0.5em;
+  font-size: 0.4em;
   color: red;
 }
 .checkbox-label,
@@ -533,6 +533,14 @@ footer {
   from {
     opacity: 0;
     transform: translateY(-150px);
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes topnav-open {
+  from {
+    opacity: 0;
   }
   to {
     opacity: 1;
