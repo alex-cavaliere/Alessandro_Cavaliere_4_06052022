@@ -77,7 +77,7 @@ function check(elementName, i, type, messageClass, message){
   const elements = document.getElementsByName(elementName);
   for(const element of elements){
     if (type === "text" ){
-      if(!x.textregex.test(element.value) || element.value === ""){
+      if(!x.textregex.test(element.value)){
         formData[i].dataset.errorVisible = true;
         document.querySelector(messageClass).innerHTML = message;
         return false;
