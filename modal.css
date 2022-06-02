@@ -53,14 +53,15 @@ img {
 }
 
 .topnav a:hover {
-  background-color: #ff0000;
+  background-color: #FE142F;
+  text-decoration: underline;
   transition: background-color 600ms;
   color: #ffffff;
   border-radius: 15px;
 }
 
 .topnav a.active {
-  background-color: #ff0000;
+  background-color: #FE142F;
   color: #ffffff;
   border-radius: 15px;
 }
