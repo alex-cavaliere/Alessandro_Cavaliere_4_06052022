@@ -55,6 +55,7 @@ let firstname = document.getElementById('first');
 let lastname = document.getElementById('last');
 let email = document.getElementById('email');
 let date = document.getElementById('birthdate');
+let quantity = document.getElementById('quantity');
 
 // function de validation du form.
 function validate(){
@@ -65,6 +66,7 @@ function validate(){
     let lastname = check('last', 1, 'text', '.last_message', 'saisissez un nom valide');
     let email = check('email', 2, 'email', '.email_message', 'saisissez un e-mail valide');
     let date = check('birthdate', 3, 'date', '.date_message', 'vous deviez avoir 18 ans pour parteciper');
+    let quantity = check('quantity', 4, 'number', '.quantity_message', 'saisissez un numero');
     let location = check('location', 5, 'radio', '.location_message', 'saisissez une Ville');
     let termes = check('checkbox1', 6, 'checkbox', '.terms_message', 'accepter les termes et conditions');
   })
@@ -75,7 +77,7 @@ function check(elementName, i, type, messageClass, message){
   const elements = document.getElementsByName(elementName);
   for(const element of elements){
     if (type === "text" ){
-      if(!x.textregex.test(element.value)){
+      if(!x.textregex.test(element.value) || element.value === ""){
         formData[i].dataset.errorVisible = true;
         document.querySelector(messageClass).innerHTML = message;
         return false;
@@ -88,7 +90,13 @@ function check(elementName, i, type, messageClass, message){
       }  
     }else if (type === "date"){
       element.min = '1940-12-31';
-      if(element.value > x.legaldate){
+      if(element.value > x.legaldate || element.value === ""){
+        formData[i].dataset.errorVisible = true;
+        document.querySelector(messageClass).innerHTML = message;
+        return false;
+      }
+    }else if (type === "number"){
+      if(element.value === ""){
         formData[i].dataset.errorVisible = true;
         document.querySelector(messageClass).innerHTML = message;
         return false;
@@ -105,7 +113,7 @@ function check(elementName, i, type, messageClass, message){
         formData[i].dataset.errorVisible = true;
         document.querySelector(messageClass).innerHTML = message;
         return false;
-      }else if(terms.checked && checked && x.textregex.test(firstname.value) && x.textregex.test(lastname.value) && x.emailregex.test(email.value) && date.value < x.legaldate){
+      }else if(terms.checked && checked && x.textregex.test(firstname.value) && x.textregex.test(lastname.value) && x.emailregex.test(email.value) && date.value < x.legaldate && quantity.value !== ""){
         formData[i].dataset.errorVisible = false;
         document.querySelector(messageClass).innerHTML = "";
         launchConfirm();
